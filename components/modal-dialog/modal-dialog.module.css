@@ -1,0 +1,16 @@
+.mainContent {
+    border: none;
+    padding: 2rem;
+    background: linear-gradient(90deg, #f9572a, #ff9b05);
+    border-radius: 8px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.mainContent button {
+    float: inline-end;
+    padding: 5px 15px;
+    border-radius: 8px;
+    border: none;
+    color: #f9572a;
+}
