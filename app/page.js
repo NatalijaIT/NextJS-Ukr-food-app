@@ -1,8 +1,12 @@
+"use client"
 import Link from "next/link";
 import classes from "./page.module.css";
 import ImageSlideshow from "@/components/images/image-slideshow";
+import { useMeals } from "@/hooks/meals/useMeals";
 
 export default function Home() {
+  const { data: meals, refetch, isFetching } = useMeals();
+
   return (
     <>
       <header className={classes.header}>

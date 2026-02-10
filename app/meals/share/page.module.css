@@ -92,3 +92,10 @@
     color: #979797;
     cursor: not-allowed;
 }
+
+.error {
+    color: #f9572a;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}

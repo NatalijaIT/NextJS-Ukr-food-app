@@ -42,3 +42,9 @@
 .preview img {
     object-fit: cover;
 }
+
+.error {
+    color: #f9572a;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}

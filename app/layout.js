@@ -1,4 +1,5 @@
 import MainHeader from '@/components/main-header/main-header';
+import { Providers } from './providers';
 import './globals.css';
 
 export const metadata = {
@@ -9,13 +10,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        data-new-gr-c-s-check-loaded="14.1268.0"
-        data-gr-ext-installed=""
-      >
-        <div id="modal"></div>
-        <MainHeader />
-        {children}
+      <body suppressHydrationWarning>
+        <Providers>
+          <div id="modal"></div>
+          <MainHeader />
+          {children}
+        </Providers>
       </body>
     </html >
   );

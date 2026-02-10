@@ -1,37 +1,34 @@
+'use client';
+
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
 
-import { getMeal } from '@/lib/meals';
+import { useMeal } from '@/hooks/meals/useMeal';
 import styles from './page.module.css';
-import { notFound } from 'next/navigation';
 
-function generatedMetadata({ params }) {
-    debugger;
-    const meal = getMeal(params.mealSlug);
+export default function MealDetailsPage() {
+    const { order_slug } = useParams();
+    const { data: meal, isLoading, error } = useMeal(order_slug);
 
-    if (!meal) {
-        notFound()
+    if (isLoading) {
+        return <p>Loading meal details...</p>;
     }
 
-    return {
-        title: meal.title,
-        description: meal.summary
-    };
-}
-
-export default function MealDetailsPage({ params }) {
-    const meal = getMeal(params.order_slug);
-
-    if (!meal) {
-        notFound()
+    if (error || !meal) {
+        return <p>Meal not found.</p>;
     }
 
-    meal.instructions = meal.instructions.replace(/\n/g, '<br />');
+    const formattedInstructions = meal.instructions.replace(/\n/g, '<br />');
 
     return (
         <>
             <header className={styles.header}>
                 <div className={styles.image}>
-                    <Image src={`https://natalievirt-nextjs-users-image.s3.ap-southeast-2.amazonaws.com/${meal.image}`} alt={meal.title} fill />
+                    <Image
+                        src={`https://natalievirt-nextjs-users-image.s3.ap-southeast-2.amazonaws.com/${meal.image}`}
+                        alt={meal.title}
+                        fill
+                    />
                 </div>
                 <div className={styles.headerText}>
                     <h1>{meal.title}</h1>
@@ -43,9 +40,9 @@ export default function MealDetailsPage({ params }) {
             </header>
             <main>
                 <p className={styles.instructions} dangerouslySetInnerHTML={{
-                    __html: meal.instructions,
+                    __html: formattedInstructions,
                 }}></p>
             </main>
         </>
-    )
+    );
 }

@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import Image from 'next/image';
 import styles from './image-picker.module.css';
 
-export default function ImagePicker({ label, name }) {
+export default function ImagePicker({ label, name, onChange, error }) {
     const [pickedImage, setPickedImage] = useState();
     const imageInput = useRef();
 
@@ -17,6 +17,7 @@ export default function ImagePicker({ label, name }) {
 
         if (!file) {
             setPickedImage(null);
+            onChange?.(null);
             return;
         }
 
@@ -25,6 +26,8 @@ export default function ImagePicker({ label, name }) {
             setPickedImage(fileReader.result);
         };
         fileReader.readAsDataURL(file);
+
+        onChange?.(file);
     }
 
     return (
@@ -38,6 +41,7 @@ export default function ImagePicker({ label, name }) {
                             src={pickedImage}
                             alt="Selected image"
                             fill
+                            sizes="(max-width: 768px) 100vw, 50vw"
                         />}
                 </div>
                 <input
@@ -48,7 +52,6 @@ export default function ImagePicker({ label, name }) {
                     name={name}
                     ref={imageInput}
                     onChange={handleImageChange}
-                    required
                 />
                 <button
                     className={styles.button}
@@ -58,6 +61,7 @@ export default function ImagePicker({ label, name }) {
                     Pick an Image
                 </button>
             </div>
+            {error && <p className={styles.error}>{error}</p>}
         </div>
     )
 }

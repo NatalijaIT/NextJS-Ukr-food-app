@@ -1,20 +1,12 @@
+'use client';
+
 import MealsGrid from "@/components/meals/meals-grid";
 import Link from "next/link";
-import { getMeals } from "@/lib/meals";
+import { useMeals } from "@/hooks/meals/useMeals";
 import classes from "./page.module.css";
-import { Suspense } from "react";
 
-export const metadata = {
-    title: 'All Meals',
-    description: 'Browse the delicious meals shared by our vibrant community.',
-};
-
-async function Meals() {
-    const meals = await getMeals();
-    return <MealsGrid meals={meals} />
-}
-
-export default async function MealPage() {
+export default function MealPage() {
+    const { data: meals, isLoading, error } = useMeals();
 
     return (
         <>
@@ -29,11 +21,10 @@ export default async function MealPage() {
                 </p>
             </header>
             <main className={classes.main}>
-                <Suspense fallback={<p className={classes.loading}>Fetching meals...</p>}>
-                    <Meals />
-                </Suspense>
+                {isLoading && <p className={classes.loading}>Fetching meals...</p>}
+                {error && <p className={classes.error}>Failed to load meals.</p>}
+                {meals && <MealsGrid meals={meals} />}
             </main>
         </>
-
-    )
+    );
 }
