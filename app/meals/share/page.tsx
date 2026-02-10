@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import { useCreateMeal } from '@/hooks/meals/useCreateMeal';
 import ImagePicker from '@/components/meals/image-picker';
+import { MealFormData } from '@/types/meal';
 
 import classes from './page.module.css';
 
@@ -17,7 +18,7 @@ export default function ShareMealPage() {
         handleSubmit,
         control,
         formState: { errors }
-    } = useForm({
+    } = useForm<MealFormData>({
         defaultValues: {
             name: '',
             email: '',
@@ -28,14 +29,16 @@ export default function ShareMealPage() {
         }
     });
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (data: MealFormData) => {
         const formData = new FormData();
         formData.append('name', data.name);
         formData.append('email', data.email);
         formData.append('title', data.title);
         formData.append('summary', data.summary);
         formData.append('instructions', data.instructions);
-        formData.append('image', data.image);
+        if (data.image) {
+            formData.append('image', data.image);
+        }
 
         try {
             await createMeal.mutateAsync(formData);
@@ -109,7 +112,7 @@ export default function ShareMealPage() {
                         <label htmlFor="instructions">Instructions</label>
                         <textarea
                             id="instructions"
-                            rows="10"
+                            rows={10}
                             {...register('instructions', {
                                 required: 'Instructions are required'
                             })}

@@ -7,7 +7,7 @@ import { useMeal } from '@/hooks/meals/useMeal';
 import styles from './page.module.css';
 
 export default function MealDetailsPage() {
-    const { order_slug } = useParams();
+    const { order_slug } = useParams<{ order_slug: string }>();
     const { data: meal, isLoading, error } = useMeal(order_slug);
 
     if (isLoading) {

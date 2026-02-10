@@ -1,7 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getMealBySlug } from '@/lib/services/meals.service';
 
-export async function GET(request, { params }) {
+export async function GET(
+    request: NextRequest,
+    { params }: { params: Promise<{ slug: string }> }
+) {
     try {
         const { slug } = await params;
         const meal = await getMealBySlug(slug);
@@ -15,8 +18,9 @@ export async function GET(request, { params }) {
 
         return NextResponse.json({ meal });
     } catch (error) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
         return NextResponse.json(
-            { error: error.message },
+            { error: message },
             { status: 500 }
         );
     }

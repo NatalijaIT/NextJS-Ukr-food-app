@@ -1,12 +1,12 @@
 'use server';
 
-import { MongoClient } from 'mongodb';
+import { MongoClient, Db } from 'mongodb';
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = process.env.MONGODB_URI!;
 
-let cachedClient = null;
+let cachedClient: MongoClient | null = null;
 
-export async function connectToDatabase() {
+export async function connectToDatabase(): Promise<MongoClient> {
     if (cachedClient) {
         return cachedClient;
     }
@@ -16,7 +16,7 @@ export async function connectToDatabase() {
     return client;
 }
 
-export async function getDatabase() {
+export async function getDatabase(): Promise<{ db: Db }> {
     const client = await connectToDatabase();
     return { db: client.db() };
 }

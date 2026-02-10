@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getAllMeals, createMeal } from '@/lib/services/meals.service';
 
 export async function GET() {
@@ -6,23 +6,24 @@ export async function GET() {
         const meals = await getAllMeals();
         return NextResponse.json({ meals });
     } catch (error) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
         return NextResponse.json(
-            { error: error.message },
+            { error: message },
             { status: 500 }
         );
     }
 }
 
-export async function POST(request) {
+export async function POST(request: NextRequest) {
     try {
         const formData = await request.formData();
 
-        const title = formData.get('title');
-        const summary = formData.get('summary');
-        const instructions = formData.get('instructions');
-        const creator = formData.get('name');
-        const creator_email = formData.get('email');
-        const image = formData.get('image');
+        const title = formData.get('title') as string;
+        const summary = formData.get('summary') as string;
+        const instructions = formData.get('instructions') as string;
+        const creator = formData.get('name') as string;
+        const creator_email = formData.get('email') as string;
+        const image = formData.get('image') as File;
 
         if (!title || !summary || !instructions || !creator || !creator_email) {
             return NextResponse.json(
@@ -56,8 +57,9 @@ export async function POST(request) {
 
         return NextResponse.json({ meal, message: 'Meal created successfully!' }, { status: 201 });
     } catch (error) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
         return NextResponse.json(
-            { error: error.message },
+            { error: message },
             { status: 500 }
         );
     }

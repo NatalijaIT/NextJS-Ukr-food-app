@@ -1,4 +1,6 @@
-export async function fetchMeals() {
+import { Meal } from '@/types/meal';
+
+export async function fetchMeals(): Promise<Meal[]> {
     const response = await fetch('/api/meals');
 
     if (!response.ok) {
@@ -10,7 +12,7 @@ export async function fetchMeals() {
     return data.meals;
 }
 
-export async function fetchMeal(slug) {
+export async function fetchMeal(slug: string): Promise<Meal> {
     const response = await fetch(`/api/meals/${slug}`);
 
     if (!response.ok) {
@@ -22,7 +24,7 @@ export async function fetchMeal(slug) {
     return data.meal;
 }
 
-export async function createMeal(formData) {
+export async function createMeal(formData: FormData): Promise<{ meal: Meal; message: string }> {
     const response = await fetch('/api/meals', {
         method: 'POST',
         body: formData,

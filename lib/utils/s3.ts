@@ -6,7 +6,7 @@ const s3 = new S3({
 
 const BUCKET_NAME = 'natalievirt-nextjs-users-image';
 
-export async function uploadImageToS3(file, fileName) {
+export async function uploadImageToS3(file: File, fileName: string): Promise<string> {
     const bufferedImage = await file.arrayBuffer();
 
     await s3.putObject({

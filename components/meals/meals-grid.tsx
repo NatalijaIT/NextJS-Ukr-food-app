@@ -1,13 +1,18 @@
 import MealItem from "./meal-item";
+import { Meal } from "@/types/meal";
 
 import classes from "./meals-grid.module.css";
 
-export default function MealsGrid({ meals }) {
+interface MealsGridProps {
+    meals: Meal[];
+}
+
+export default function MealsGrid({ meals }: MealsGridProps) {
 
     return (
         <ul className={classes.meals}>
             {meals.map(meal => (
-                <li key={meal.id}>
+                <li key={meal._id}>
                     <MealItem {...meal} />
                 </li>
             ))}
