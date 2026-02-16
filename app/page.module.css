@@ -22,10 +22,8 @@
     font-family: 'Montserrat', sans-serif;
     letter-spacing: 0.15rem;
     text-transform: uppercase;
-    background: linear-gradient(90deg, #f9572a, #ffc905);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    margin-top: 3rem;
+    color: #fff;
 }
 
 .cta {
@@ -51,16 +49,22 @@
 }
 
 .cta a:first-child {
-    background: transparent;
-    font-weight: normal;
-    color: #ff9b05;
-    padding-left: 0;
+    background: linear-gradient(90deg, #f9572a, #ff9b05);
+    font-weight: bold;
+    color: #fff;
+    padding: 0.75rem 2rem;
+    font-size: 1.3rem;
+    letter-spacing: 0.05rem;
+    text-transform: uppercase;
+    box-shadow: 0 0 18px rgba(249, 87, 42, 0.5);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .cta a:first-child:hover,
 .cta a:first-child:active {
-    background: transparent;
-    color: #f9b241;
+    background: linear-gradient(90deg, #fd4715, #f9b241);
+    transform: scale(1.05);
+    box-shadow: 0 0 28px rgba(249, 87, 42, 0.7);
 }
 
 .section {

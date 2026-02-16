@@ -20,7 +20,7 @@ export default function ModalDialog({ ref, children }: ModalDialogProps) {
 
     useEffect(() => {
         setIsDomReady(true);
-    })
+    }, [])
 
     useImperativeHandle(ref, () => {
         return {
