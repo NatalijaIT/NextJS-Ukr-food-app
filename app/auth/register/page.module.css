@@ -1,6 +1,6 @@
 .header {
     gap: 3rem;
-    margin: 7rem auto 5rem auto;
+    margin: 7rem auto 3rem auto;
     width: 90%;
     max-width: 75rem;
     color: #fff;
@@ -21,12 +21,12 @@
 .main {
     width: 90%;
     max-width: 75rem;
-    margin: 3rem auto;
+    margin: 2rem auto;
     color: white;
 }
 
 .form {
-    max-width: 50rem;
+    max-width: 30rem;
 }
 
 .form label {
@@ -38,8 +38,7 @@
     font-weight: bold;
 }
 
-.form input,
-.form textarea {
+.form input {
     display: block;
     width: 100%;
     padding: 0.5rem 1rem;
@@ -49,18 +48,8 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-.form input:focus,
-.form textarea:focus {
+.form input:focus {
     outline-color: #f99f2a;
-}
-
-.row {
-    display: flex;
-    gap: 1rem;
-}
-
-.row p {
-    width: 100%;
 }
 
 .actions {
@@ -71,7 +60,6 @@
     border: 0;
     padding: 0.75rem 2rem;
     background: linear-gradient(90deg, #f9572a, #ff9b05);
-    border: none;
     color: #ffffff;
     border-radius: 2px;
     cursor: pointer;
@@ -85,18 +73,9 @@
     background: linear-gradient(90deg, #fd4715, #f9b241);
 }
 
-.actions button:disabled,
-.actions button:hover:disabled,
-.actions button:focus:disabled {
+.actions button:disabled {
     background: #ccc;
     color: #979797;
-    cursor: not-allowed;
-}
-
-.form input[readonly],
-.form input[readonly]:hover {
-    background-color: #2a2d35;
-    color: #aaa;
     cursor: not-allowed;
 }
 
@@ -105,4 +84,20 @@
     font-size: 0.875rem;
     margin-top: 0.25rem;
     display: block;
+}
+
+.switchLink {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #ddd;
+}
+
+.switchLink a {
+    color: #f9b331;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.switchLink a:hover {
+    text-decoration: underline;
 }

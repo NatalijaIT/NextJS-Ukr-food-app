@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import MainHeaderBackground from "./main-header-background";
+import AuthStatus from "./auth-status";
 import logoImg from "@/assets/logo.png";
 import styles from "./main-header.module.css";
 
@@ -14,6 +15,9 @@ export default function MainHeader() {
                     <Image src={logoImg} alt="Main logo" priority />
                     Ukrainian Food
                 </Link>
+                <nav className={styles.nav}>
+                    <AuthStatus />
+                </nav>
             </header>
         </>
     )

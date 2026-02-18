@@ -2,6 +2,7 @@
 
 import { useForm, Controller } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 import { useCreateMeal } from '@/hooks/meals/useCreateMeal';
 import ImagePicker from '@/components/meals/image-picker';
@@ -11,6 +12,7 @@ import classes from './page.module.css';
 
 export default function ShareContent() {
     const router = useRouter();
+    const { data: session } = useSession();
     const createMeal = useCreateMeal();
 
     const {
@@ -26,7 +28,15 @@ export default function ShareContent() {
             summary: '',
             instructions: '',
             image: null
-        }
+        },
+        values: {
+            name: session?.user?.name || '',
+            email: session?.user?.email || '',
+            title: '',
+            summary: '',
+            instructions: '',
+            image: null
+        },
     });
 
     const onSubmit = async (data: MealFormData) => {
@@ -64,6 +74,7 @@ export default function ShareContent() {
                             <input
                                 type="text"
                                 id="name"
+                                readOnly={!!session?.user?.name}
                                 {...register('name', {
                                     required: 'Name is required'
                                 })}
@@ -75,6 +86,7 @@ export default function ShareContent() {
                             <input
                                 type="email"
                                 id="email"
+                                readOnly={!!session?.user?.email}
                                 {...register('email', {
                                     required: 'Email is required',
                                     pattern: {
