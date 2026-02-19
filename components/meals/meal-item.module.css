@@ -54,7 +54,10 @@
 
 .actions {
     padding: 1rem;
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 .actions a {
@@ -64,7 +67,9 @@
     border-radius: 0.5rem;
     background: linear-gradient(90deg, #f9572a, #ff9b05);
     color: #ffffff;
+    font: inherit;
     font-weight: bold;
+    font-size: 0.9rem;
     text-decoration: none;
 }
 
@@ -72,4 +77,32 @@
 .actions a:active {
     background: linear-gradient(90deg, #fd4715, #f9b241);
     box-shadow: 0 0 12px rgba(242, 100, 18, 0.8);
+}
+
+.deleteBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: #c0392b;
+    border: none;
+    color: #fff;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font: inherit;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.deleteBtn:hover {
+    background: #e74c3c;
+    box-shadow: 0 0 12px rgba(192, 57, 43, 0.8);
+}
+
+.deleteBtn:disabled {
+    background: #999;
+    cursor: not-allowed;
+    box-shadow: none;
 }

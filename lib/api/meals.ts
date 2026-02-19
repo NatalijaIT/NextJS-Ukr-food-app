@@ -24,6 +24,19 @@ export async function fetchMeal(slug: string): Promise<Meal> {
     return data.meal;
 }
 
+export async function deleteMealBySlug(slug: string): Promise<{ message: string }> {
+    const response = await fetch(`/api/meals/${slug}`, {
+        method: 'DELETE',
+    });
+
+    if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to delete meal');
+    }
+
+    return await response.json();
+}
+
 export async function createMeal(formData: FormData): Promise<{ meal: Meal; message: string }> {
     const response = await fetch('/api/meals', {
         method: 'POST',

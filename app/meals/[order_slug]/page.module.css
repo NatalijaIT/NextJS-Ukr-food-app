@@ -73,6 +73,35 @@
     animation: fade-slide-in-from-bottom 1s ease-out forwards;
 }
 
+.actions {
+    max-width: 60rem;
+    margin: 1rem auto 2rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.deleteBtn {
+    padding: 0.5rem 1rem;
+    background: #c0392b;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 4px;
+    font: inherit;
+    font-size: 0.95rem;
+    transition: color 0.2s, background 0.2s;
+    animation: fade-slide-in-from-right 1s ease-out forwards;
+}
+
+.deleteBtn:disabled {
+    color: #999;
+    background: none;
+    cursor: not-allowed;
+}
+
 .loading {
     font-size: 3rem;
     text-align: center;

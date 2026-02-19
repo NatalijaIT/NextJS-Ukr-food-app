@@ -1,8 +1,10 @@
 import slugify from 'slugify';
 import xss from 'xss';
 import { getDatabase } from '../mongodb';
-import { uploadImageToS3 } from '../utils/s3';
+import { uploadImageToS3, deleteImageFromS3 } from '../utils/s3';
+import { revalidatePath } from "next/cache";
 import { Meal, CreateMealInput } from '@/types/meal';
+import { ObjectId } from 'mongodb';
 
 export async function getAllMeals(): Promise<Meal[]> {
     const { db } = await getDatabase();
@@ -51,4 +53,17 @@ export async function createMeal(mealData: CreateMealInput): Promise<Meal> {
         ...meal,
         _id: result.insertedId.toString(),
     } as Meal;
+}
+
+export async function deleteMeal(id: string): Promise<void> {
+    const { db } = await getDatabase();
+
+    const meal = await db.collection('meals').findOne({ _id: new ObjectId(id) });
+
+    if (meal?.image) {
+        await deleteImageFromS3(meal.image as string);
+    }
+
+    await db.collection('meals').deleteOne({ _id: new ObjectId(id) });
+    return revalidatePath("/meals");
 }

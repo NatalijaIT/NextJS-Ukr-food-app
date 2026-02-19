@@ -18,3 +18,10 @@ export async function uploadImageToS3(file: File, fileName: string): Promise<str
 
     return fileName;
 }
+
+export async function deleteImageFromS3(fileName: string): Promise<void> {
+    await s3.deleteObject({
+        Bucket: BUCKET_NAME,
+        Key: fileName,
+    });
+}
