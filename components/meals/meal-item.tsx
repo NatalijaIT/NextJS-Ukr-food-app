@@ -36,7 +36,7 @@ export default function MealItem({ title, slug, image, summary, creator, creator
     };
 
     return (
-        <article className={classes.meal}>
+        <article className={classes.meal} aria-label={title} aria-busy={deleteMeal.isPending}>
             <header>
                 <div className={classes.image}>
                     <Image src={`https://natalievirt-nextjs-users-image.s3.ap-southeast-2.amazonaws.com/${image}`} alt={title} fill />
@@ -49,15 +49,15 @@ export default function MealItem({ title, slug, image, summary, creator, creator
             <div className={classes.content}>
                 <p className={classes.summary}>{summary}</p>
                 <div className={classes.actions}>
-                    <Link href={`/meals/${slug}`}>View Details</Link>
+                    <Link href={`/meals/${slug}`} aria-label={`View details of ${title}`}>View Details</Link>
                     {isCreator && (
                         <button
                             className={classes.deleteBtn}
                             onClick={handleDelete}
                             disabled={deleteMeal.isPending}
-                            title="Delete Meal"
+                            aria-label={`Delete ${title}`}
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <polyline points="3 6 5 6 21 6" />
                                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
                                 <line x1="10" y1="11" x2="10" y2="17" />

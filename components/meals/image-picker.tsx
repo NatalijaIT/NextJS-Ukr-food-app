@@ -13,7 +13,11 @@ interface ImagePickerProps {
 
 export default function ImagePicker({ label, name, onChange, error }: ImagePickerProps) {
     const [pickedImage, setPickedImage] = useState<string | null>(null);
+    const [pickedFileName, setPickedFileName] = useState<string | null>(null);
     const imageInput = useRef<HTMLInputElement>(null);
+
+    const errorId = `${name}-error`;
+    const statusId = `${name}-status`;
 
     function handlePickClick() {
         return imageInput.current?.click();
@@ -24,6 +28,7 @@ export default function ImagePicker({ label, name, onChange, error }: ImagePicke
 
         if (!file) {
             setPickedImage(null);
+            setPickedFileName(null);
             onChange?.(null);
             return;
         }
@@ -34,6 +39,7 @@ export default function ImagePicker({ label, name, onChange, error }: ImagePicke
         };
         fileReader.readAsDataURL(file);
 
+        setPickedFileName(file.name);
         onChange?.(file);
     }
 
@@ -41,7 +47,7 @@ export default function ImagePicker({ label, name, onChange, error }: ImagePicke
         <div className={styles.picker}>
             <label htmlFor={name}>{label}</label>
             <div className={styles.controls}>
-                <div className={styles.preview}>
+                <div className={styles.preview} aria-hidden="true">
                     {!pickedImage ?
                         <p>No image picked yet.</p> :
                         <Image
@@ -59,16 +65,24 @@ export default function ImagePicker({ label, name, onChange, error }: ImagePicke
                     name={name}
                     ref={imageInput}
                     onChange={handleImageChange}
+                    aria-invalid={!!error}
+                    aria-describedby={`${statusId}${error ? ` ${errorId}` : ''}`}
                 />
-                <button
-                    className={styles.button}
-                    type="button"
-                    onClick={handlePickClick}
-                >
-                    Pick an Image
-                </button>
+                <div>
+                    <button
+                        className={styles.button}
+                        type="button"
+                        onClick={handlePickClick}
+                        aria-describedby={`${statusId}${error ? ` ${errorId}` : ''}`}
+                    >
+                        Pick an Image
+                    </button>
+                    <p id={statusId} className={styles.status} aria-live="polite">
+                        {pickedFileName ? `Selected: ${pickedFileName}` : 'No image selected'}
+                    </p>
+                </div>
             </div>
-            {error && <p className={styles.error}>{error}</p>}
+            {error && <p id={errorId} className={styles.error} role="alert">{error}</p>}
         </div>
     )
 }

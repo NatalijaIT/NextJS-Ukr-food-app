@@ -21,9 +21,9 @@ export default function MealsContent() {
                     <Link href="/meals/share">Share your favourite recipe</Link>
                 </p>
             </header>
-            <main className={classes.main}>
+            <main id="main-content" className={classes.main}>
                 {isLoading && <Loader message="Fetching meals..." />}
-                {error && <p className={classes.error}>Failed to load meals.</p>}
+                {error && <p className={classes.error} role="alert">Failed to load meals.</p>}
                 {meals && <MealsGrid meals={meals} />}
             </main>
         </>

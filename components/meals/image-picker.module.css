@@ -43,6 +43,12 @@
     object-fit: cover;
 }
 
+.status {
+    font-size: 0.8rem;
+    color: #ccc;
+    margin: 0.4rem 0 0;
+}
+
 .error {
     color: #f9572a;
     font-size: 0.875rem;

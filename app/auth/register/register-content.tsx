@@ -54,27 +54,44 @@ export default function RegisterContent() {
     return (
         <>
             <header className={classes.header}>
-                <h1>
+                <h1 id="register-heading">
                     <span className={classes.highlight}>Register</span>
                 </h1>
                 <p>Create an account to share your favorite meals.</p>
             </header>
-            <main className={classes.main}>
-                <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+            <main id="main-content" className={classes.main}>
+                <form
+                    className={classes.form}
+                    onSubmit={handleSubmit(onSubmit)}
+                    aria-labelledby="register-heading"
+                    noValidate
+                >
                     <p>
                         <label htmlFor="name">Your Name</label>
                         <input
                             type="text"
                             id="name"
+                            autoComplete="name"
+                            aria-required="true"
+                            aria-invalid={!!errors.name}
+                            aria-describedby={errors.name ? 'name-error' : undefined}
                             {...register('name', { required: 'Name is required' })}
                         />
-                        {errors.name && <span className={classes.error}>{errors.name.message}</span>}
+                        {errors.name && (
+                            <span id="name-error" className={classes.error} role="alert">
+                                {errors.name.message}
+                            </span>
+                        )}
                     </p>
                     <p>
                         <label htmlFor="email">Email</label>
                         <input
                             type="email"
                             id="email"
+                            autoComplete="email"
+                            aria-required="true"
+                            aria-invalid={!!errors.email}
+                            aria-describedby={errors.email ? 'email-error' : undefined}
                             {...register('email', {
                                 required: 'Email is required',
                                 pattern: {
@@ -83,25 +100,42 @@ export default function RegisterContent() {
                                 },
                             })}
                         />
-                        {errors.email && <span className={classes.error}>{errors.email.message}</span>}
+                        {errors.email && (
+                            <span id="email-error" className={classes.error} role="alert">
+                                {errors.email.message}
+                            </span>
+                        )}
                     </p>
                     <p>
                         <label htmlFor="password">Password</label>
                         <input
                             type="password"
                             id="password"
+                            autoComplete="new-password"
+                            aria-required="true"
+                            aria-invalid={!!errors.password}
+                            aria-describedby={`password-hint${errors.password ? ' password-error' : ''}`}
                             {...register('password', {
                                 required: 'Password is required',
                                 minLength: { value: 6, message: 'Minimum 6 characters' },
                             })}
                         />
-                        {errors.password && <span className={classes.error}>{errors.password.message}</span>}
+                        <span id="password-hint" className={classes.hint}>Minimum 6 characters</span>
+                        {errors.password && (
+                            <span id="password-error" className={classes.error} role="alert">
+                                {errors.password.message}
+                            </span>
+                        )}
                     </p>
                     <p>
                         <label htmlFor="confirmPassword">Confirm Password</label>
                         <input
                             type="password"
                             id="confirmPassword"
+                            autoComplete="new-password"
+                            aria-required="true"
+                            aria-invalid={!!errors.confirmPassword}
+                            aria-describedby={errors.confirmPassword ? 'confirm-password-error' : undefined}
                             {...register('confirmPassword', {
                                 required: 'Please confirm your password',
                                 validate: (value) =>
@@ -109,14 +143,16 @@ export default function RegisterContent() {
                             })}
                         />
                         {errors.confirmPassword && (
-                            <span className={classes.error}>{errors.confirmPassword.message}</span>
+                            <span id="confirm-password-error" className={classes.error} role="alert">
+                                {errors.confirmPassword.message}
+                            </span>
                         )}
                     </p>
                     {registerMutation.error && (
-                        <p className={classes.error}>{registerMutation.error.message}</p>
+                        <p className={classes.error} role="alert">{registerMutation.error.message}</p>
                     )}
                     <p className={classes.actions}>
-                        <button type="submit" disabled={registerMutation.isPending}>
+                        <button type="submit" disabled={registerMutation.isPending} aria-busy={registerMutation.isPending}>
                             {registerMutation.isPending ? 'Creating account...' : 'Register'}
                         </button>
                     </p>

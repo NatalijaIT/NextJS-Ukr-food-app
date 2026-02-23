@@ -21,7 +21,7 @@ export default function HomeContent() {
           </div>
         </div>
       </header>
-      <main>
+      <main id="main-content">
         <section className={classes.section}>
           <h2>Why Ukrainian Food?</h2>
           <p>

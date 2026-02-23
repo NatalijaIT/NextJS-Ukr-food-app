@@ -8,7 +8,11 @@ export default function AuthStatus() {
     const { data: session, status } = useSession();
 
     if (status === 'loading') {
-        return <div className={styles.loading}>...</div>;
+        return (
+            <div className={styles.loading} role="status" aria-label="Loading authentication status">
+                <span aria-hidden="true">...</span>
+            </div>
+        );
     }
 
     if (session?.user) {

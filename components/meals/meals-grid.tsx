@@ -10,7 +10,7 @@ interface MealsGridProps {
 export default function MealsGrid({ meals }: MealsGridProps) {
 
     return (
-        <ul className={classes.meals}>
+        <ul className={classes.meals} aria-label="Meals list">
             {meals.map(meal => (
                 <li key={meal._id}>
                     <MealItem {...meal} />

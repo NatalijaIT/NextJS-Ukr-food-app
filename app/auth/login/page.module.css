@@ -52,6 +52,11 @@
     outline-color: #f99f2a;
 }
 
+.form input[aria-invalid="true"] {
+    border-color: #f9572a;
+    outline-color: #f9572a;
+}
+
 .actions {
     text-align: right;
 }

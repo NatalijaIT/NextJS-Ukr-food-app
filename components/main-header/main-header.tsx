@@ -15,7 +15,7 @@ export default function MainHeader() {
                     <Image src={logoImg} alt="Main logo" priority />
                     Ukrainian Food
                 </Link>
-                <nav className={styles.nav}>
+                <nav className={styles.nav} aria-label="Main navigation">
                     <AuthStatus />
                 </nav>
             </header>

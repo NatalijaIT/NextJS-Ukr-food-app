@@ -52,6 +52,18 @@
     outline-color: #f99f2a;
 }
 
+.form input[aria-invalid="true"] {
+    border-color: #f9572a;
+    outline-color: #f9572a;
+}
+
+.hint {
+    display: block;
+    font-size: 0.8rem;
+    color: #bbb;
+    margin-top: 0.25rem;
+}
+
 .actions {
     text-align: right;
 }
