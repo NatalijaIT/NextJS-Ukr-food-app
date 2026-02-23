@@ -26,8 +26,9 @@ export default function AuthStatus() {
     }
 
     return (
-        <Link href="/auth/login" className={styles.loginLink}>
-            Login
-        </Link>
+        <div className={styles.authStatus}>
+            <Link href="/auth/login" className={styles.loginLink}>Login</Link>
+            <Link href="/auth/register" className={styles.registerLink}>Register</Link>
+        </div>
     );
 }

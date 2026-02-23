@@ -26,3 +26,10 @@ export interface CreateMealInput {
     creator_email: string;
     image: File;
 }
+
+export interface EditMealFormData {
+    title: string;
+    summary: string;
+    instructions: string;
+    image?: File | null;
+}

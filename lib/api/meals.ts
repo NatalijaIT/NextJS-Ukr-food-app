@@ -24,6 +24,20 @@ export async function fetchMeal(slug: string): Promise<Meal> {
     return data.meal;
 }
 
+export async function updateMealBySlug(slug: string, formData: FormData): Promise<{ meal: Meal; message: string }> {
+    const response = await fetch(`/api/meals/${slug}`, {
+        method: 'PUT',
+        body: formData,
+    });
+
+    if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to update meal');
+    }
+
+    return await response.json();
+}
+
 export async function deleteMealBySlug(slug: string): Promise<{ message: string }> {
     const response = await fetch(`/api/meals/${slug}`, {
         method: 'DELETE',

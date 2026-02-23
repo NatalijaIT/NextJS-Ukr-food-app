@@ -3,7 +3,7 @@ import xss from 'xss';
 import { getDatabase } from '../mongodb';
 import { uploadImageToS3, deleteImageFromS3 } from '../utils/s3';
 import { revalidatePath } from "next/cache";
-import { Meal, CreateMealInput } from '@/types/meal';
+import { Meal, CreateMealInput, EditMealFormData } from '@/types/meal';
 import { ObjectId } from 'mongodb';
 
 export async function getAllMeals(): Promise<Meal[]> {
@@ -53,6 +53,31 @@ export async function createMeal(mealData: CreateMealInput): Promise<Meal> {
         ...meal,
         _id: result.insertedId.toString(),
     } as Meal;
+}
+
+export async function updateMeal(slug: string, data: EditMealFormData): Promise<Meal> {
+    const { db } = await getDatabase();
+    const existing = await db.collection('meals').findOne({ slug });
+    if (!existing) throw new Error('Meal not found.');
+
+    const instructions = xss(data.instructions);
+    let imageName = existing.image as string;
+
+    if (data.image) {
+        if (imageName) await deleteImageFromS3(imageName);
+        const extension = data.image.name.split('.').pop()!;
+        const fileName = `${slug}.${extension}`;
+        await uploadImageToS3(data.image, fileName);
+        imageName = fileName;
+    }
+
+    await db.collection('meals').updateOne(
+        { slug },
+        { $set: { title: data.title, summary: data.summary, instructions, image: imageName } }
+    );
+
+    revalidatePath('/meals');
+    return { ...existing, _id: existing._id.toString(), title: data.title, summary: data.summary, instructions, image: imageName } as Meal;
 }
 
 export async function deleteMeal(id: string): Promise<void> {

@@ -5,12 +5,6 @@
   padding: 2rem 1rem;
 }
 
-@media (min-width: 768px) {
-  .header {
-    padding: 2rem 10%;
-  }
-}
-
 .nav {
   display: flex;
   align-items: center;
