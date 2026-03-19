@@ -2,14 +2,17 @@
 import Link from "next/link";
 import classes from "./page.module.css";
 import ImageSlideshow from "@/components/images/image-slideshow";
+import Loader from "@/components/loader/loader";
+import { useMeals } from "@/hooks/meals/useMeals";
 
 export default function HomeContent() {
+  const { data: meals, isLoading } = useMeals();
 
   return (
     <>
       <header className={classes.header}>
         <div className={classes.slideshow}>
-          <ImageSlideshow />
+          {isLoading ? <Loader /> : <ImageSlideshow meals={meals ?? []} />}
         </div>
         <div>
           <div className={classes.hero}>

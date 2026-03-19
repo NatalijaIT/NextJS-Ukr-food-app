@@ -3,13 +3,12 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
-import { useMeals } from '@/hooks/meals/useMeals';
+import { Meal } from '@/types/meal';
 import classes from './image-slideshow.module.css';
 
 const S3_BASE_URL = 'https://natalievirt-nextjs-users-image.s3.ap-southeast-2.amazonaws.com';
 
-export default function ImageSlideshow() {
-    const { data: meals } = useMeals();
+export default function ImageSlideshow({ meals }: { meals: Meal[] }) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
@@ -21,7 +20,7 @@ export default function ImageSlideshow() {
         return () => mq.removeEventListener('change', handler);
     }, []);
 
-    const images = (meals ?? [])
+    const images = meals
         .filter(meal => meal.image)
         .map(meal => ({
             src: `${S3_BASE_URL}/${meal.image}`,
